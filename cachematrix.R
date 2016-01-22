@@ -22,22 +22,22 @@ makeCacheMatrix <- function(x = matrix()) {
   )
 }
 
-## This function computes the inverse of the special "matrix" returned by makeCacheMatrix above. 
-## If the inverse has already been calculated (and the matrix has not changed), 
+## This function computes the inverse of the special "matrix" returned by makeCacheMatrix above.
+## If the inverse has already been calculated (and the matrix has not changed),
 ## then the cachesolve should retrieve the inverse from the cache
 cacheSolve <- function(x, ...) {
-  calInverse <- x$getInverse()
-  
-  if (!is.null(calInverse) &&
-      is.matrix(calInverse)) {
-    message("From cached data....")
-    return(calInverse)
+  inv <- x$getInverse()
+  ## Checking whether the inversed matrix is in catch. If there is catched inverse matrix then this will be displayed
+  if (!is.null(inv) &&
+      is.matrix(inv)) {
+    message("Displaying Cached Inverse Matrix")
+    return(inv)
   }
   
-  matrixToSolve <- x$get()
+  inValue <- x$get()
+  ## get the inverse of matrix using solve function
+  inv <- solve(inValue)
   
-  calInverse <- solve(matrixToSolve) 
-
-  message("Setting the value of Inverse")
-  x$setInverse(calInverse)
+  message("Setting the value of Inverse Matrix")
+  x$setInverse(inv)
 }
